@@ -36,12 +36,12 @@ def default_piper_cameras() -> dict[str, CameraConfig]:
             rotation=0,
         ),
         # Phone camera (external)
-        "phone": OpenCVCameraConfig(
+        "front": RealSenseCameraConfig(
+            serial_number_or_name="112322075866",  # 실제 감지된 시리얼 번호 사용
             fps=30,
             width=640,
             height=480,
-            # Phone camera path - /dev/video3에 연결됨
-            index_or_path="/dev/video9",
+            rotation=0,
         ),
     }
 
