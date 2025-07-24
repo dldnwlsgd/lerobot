@@ -39,9 +39,8 @@ Example:
 import logging
 import time
 from collections import deque
-from collections.abc import Sequence
 from threading import Lock
-from typing import Annotated, Any
+from typing import Annotated, Any, Sequence
 
 import gymnasium as gym
 import numpy as np

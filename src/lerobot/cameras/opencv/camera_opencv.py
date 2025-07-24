@@ -18,16 +18,12 @@ Provides the OpenCVCamera class for capturing frames from cameras using OpenCV.
 
 import logging
 import math
-import os
 import platform
 import time
 from pathlib import Path
 from threading import Event, Lock, Thread
-from typing import Any
+from typing import Any, Dict, List
 
-# Fix MSMF hardware transform compatibility for Windows before importing cv2
-if platform.system() == "Windows" and "OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS" not in os.environ:
-    os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
 import numpy as np
 
@@ -245,7 +241,7 @@ class OpenCVCamera(Camera):
             )
 
     @staticmethod
-    def find_cameras() -> list[dict[str, Any]]:
+    def find_cameras() -> List[Dict[str, Any]]:
         """
         Detects available OpenCV cameras connected to the system.
 

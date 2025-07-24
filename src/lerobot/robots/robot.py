@@ -13,9 +13,8 @@
 # limitations under the License.
 
 import abc
-import builtins
 from pathlib import Path
-from typing import Any
+from typing import Any, Type
 
 import draccus
 
@@ -40,7 +39,7 @@ class Robot(abc.ABC):
     """
 
     # Set these in ALL subclasses
-    config_class: builtins.type[RobotConfig]
+    config_class: Type[RobotConfig]
     name: str
 
     def __init__(self, config: RobotConfig):

@@ -61,9 +61,9 @@ def make_teleoperator_from_config(config: TeleoperatorConfig) -> Teleoperator:
         from .homunculus import HomunculusArm
 
         return HomunculusArm(config)
-    elif config.type == "bi_so100_leader":
-        from .bi_so100_leader import BiSO100Leader
+    elif config.type == "piper_demonstration":
+        from lerobot.robots.piper.teleop_piper import PiperDemonstrationTeleop
 
-        return BiSO100Leader(config)
+        return PiperDemonstrationTeleop(config)
     else:
         raise ValueError(config.type)

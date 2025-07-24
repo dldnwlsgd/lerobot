@@ -72,9 +72,6 @@ class SO100Leader(Teleoperator):
 
         self.bus.connect()
         if not self.is_calibrated and calibrate:
-            logger.info(
-                "Mismatch between calibration values in the motor and the calibration file or no calibration file found"
-            )
             self.calibrate()
 
         self.configure()
@@ -85,16 +82,6 @@ class SO100Leader(Teleoperator):
         return self.bus.is_calibrated
 
     def calibrate(self) -> None:
-        if self.calibration:
-            # Calibration file exists, ask user whether to use it or run new calibration
-            user_input = input(
-                f"Press ENTER to use provided calibration file associated with the id {self.id}, or type 'c' and press ENTER to run calibration: "
-            )
-            if user_input.strip().lower() != "c":
-                logger.info(f"Writing calibration file associated with the id {self.id} to the motors")
-                self.bus.write_calibration(self.calibration)
-                return
-
         logger.info(f"\nRunning calibration of {self}")
         self.bus.disable_torque()
         for motor in self.bus.motors:
