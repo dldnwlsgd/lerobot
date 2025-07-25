@@ -36,7 +36,6 @@ try:
     import rclpy
     from rclpy.node import Node
     from sensor_msgs.msg import JointState
-    from std_msgs.msg import Float64MultiArray
     ROS2_AVAILABLE = True
 except ImportError:
     logger.warning("ROS2 (rclpy) not available. Piper robot will use mock interface.")
@@ -217,8 +216,8 @@ class PiperROS2Interface:
         
         # Create publisher for joint commands
         self._joint_ctrl_publisher = self._ros2_node.create_publisher(
-            Float64MultiArray,
-            '/joint_ctrl',
+            JointState,
+            '/joint_states',
             10
         )
         
@@ -239,8 +238,8 @@ class PiperROS2Interface:
         
         # LEGACY: Create publisher for joint commands
         self._joint_ctrl_publisher = self._ros2_node.create_publisher(
-            Float64MultiArray,
-            '/joint_ctrl',
+            JointState,
+            '/joint_states',
             10
         )
         
@@ -334,9 +333,11 @@ class PiperROS2Interface:
         
         try:
             if self._joint_ctrl_publisher is not None:
-                # Create Float64MultiArray message
-                msg = Float64MultiArray()
-                msg.data = target_positions.tolist()
+                # Create JointState message
+                msg = JointState()
+                msg.header.stamp = self._ros2_node.get_clock().now().to_msg()
+                msg.name = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6', 'joint7']
+                msg.position = target_positions.tolist()
                 
                 # Publish joint commands
                 self._joint_ctrl_publisher.publish(msg)
